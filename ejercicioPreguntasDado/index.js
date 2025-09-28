@@ -189,6 +189,7 @@ const preguntas = [
 
 let posicion = 0;
 let posicionJugador = 0;
+
 let divMostrar = document.querySelector("#mostrarTodo");
 let botonTirarDado = document.querySelector("#tirarDado");
 let divPosicionActual = document.querySelector("#posicionActual");
@@ -197,6 +198,8 @@ let divPosicionJugador = document.querySelector("#posicionJugador");
 divPosicionActual.innerHTML = `<h2>Pregunta ${posicion} de 20</h2>`;
 divPosicionJugador.innerHTML = `<h2>Jugador 1= ${posicionJugador} </h2>`;
 
+
+actualizarTodo();
 
 botonTirarDado.addEventListener("click", tirarDado);
 
@@ -207,55 +210,92 @@ function tirarDado() {
 
     if (posicion >= 20) {
 
-        divMostrar.innerHTML = `<h2 id="ganarPartida">¡Felicidades! Has completado el juego de preguntas.</h2>`;
+        posicion = 20;
 
+        divMostrar.innerHTML = `<h2 id="ganarPartida">¡Felicidades! Has completado el juego de preguntas.</h2>`;
         divPosicionActual.innerHTML = `<h2>Pregunta 20 de 20 </h2>`;
+        
+        //Para deshabilitar el boton despues de ganar de tirarDado
+
+        botonTirarDado.disabled = true;
+
 
     } else {
 
-        divPosicionActual.innerHTML = `<h2>Pregunta ${posicion} de 20</h2>`;
+        mostrarPregunta(posicion);
 
-        for (let i = 0; i < preguntas.length; i++) {
-            if (posicion === i) {
-                divMostrar.innerHTML= `<h2>${preguntas[i].pregunta} </h2>
-                <h3>Respuestas: </h3>
-                <div class="divRespuestas">
-                <button data-resp="0" class="botonesRespuesta">${preguntas[i].respuestas[0]}</button>
-                <button data-resp="1" class="botonesRespuesta">${preguntas[i].respuestas[1]}</button>
-                <button data-resp="2" class="botonesRespuesta">${preguntas[i].respuestas[2]}</button>
-                </div>
-                `;
-            }
-        }
-
-    
     }
 
+    actualizarTodo();
+
 }
 
-function actualizarPosicionJugador() {
+function mostrarPregunta() {
+    
+    let pregunta = preguntas[posicion]; // pregunta actual
 
-    document.querySelectorAll(".botonesRespuesta").addEventListener("click", function(event){
+    divMostrar.innerHTML = `
+        <h2>${pregunta.pregunta}</h2>
+        <h3>Respuestas:</h3>
+        <div class="divRespuestas">
+            <button data-resp="0" class="botonesRespuesta">${pregunta.respuestas[0]}</button>
+            <button data-resp="1" class="botonesRespuesta">${pregunta.respuestas[1]}</button>
+            <button data-resp="2" class="botonesRespuesta">${pregunta.respuestas[2]}</button>
+        </div>
+    `;
 
-        console.log("Has pulsado un boton");
 
-        for (let i = 0; i < preguntas.length; i++){
+    let botones = document.querySelectorAll(".botonesRespuesta");
 
-             if(event.target.dataset.resp == preguntas[i].correcta){
-                
+    for (let i = 0; i < botones.length; i++) {
+
+        botones[i].addEventListener("click", function (event) {
+
+            const respuestaSeleccionada = parseInt(event.target.dataset.resp);
+
+            if (respuestaSeleccionada === preguntas[2].correcta) {
+
                 posicionJugador = posicionJugador + 5;
-                tirarDado();
 
-            }else{
+            } else {
 
                 posicionJugador = posicionJugador - 1;
-                tirarDado();
 
+                if (posicionJugador < 0) {
+
+                    posicionJugador = 0;
+
+                }
             }
-            
-        }
-           
+
+            actualizarTodo();
+            tirarDado();
 
         });
-
+    }
 }
+
+
+
+function actualizarTodo() {
+
+    divPosicionActual.innerHTML = `<h2>Pregunta ${posicion} de ${preguntas.length}</h2>`;
+    divPosicionJugador.innerHTML = `<h2>Jugador 1= ${posicionJugador}</h2>`;
+
+
+    //Esto da, por ejemplo+, estoy en la posicion 5 (pregunta 5) de 20 (preguntas.length) dara 0.25, y si lo multiplico por 100 sera el porcentaje obtenido entonces le digo que a la barra de progreso, le cambie el css y que ponga el numero que haya salido de la operacion anterior y un % para saber que es un porcentaje, y después 
+
+
+    let progreso = (posicion / preguntas.length) * 100;
+    progressBar.style.width = progreso + "%";
+    progressBar.textContent = progreso + "%";
+
+    if (progreso >= 100) {
+
+        //Le digo que si la barra de progreso llega al 100%, que muestre 100% para que no se pueda pasar
+        
+        progressBar.innerHTML = "100%"
+
+    }
+}
+
