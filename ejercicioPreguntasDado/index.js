@@ -286,14 +286,14 @@ function actualizarTodo() {
     //Esto da, por ejemplo+, estoy en la posicion 5 (pregunta 5) de 20 (preguntas.length) dara 0.25, y si lo multiplico por 100 sera el porcentaje obtenido entonces le digo que a la barra de progreso, le cambie el css y que ponga el numero que haya salido de la operacion anterior y un % para saber que es un porcentaje, y después 
 
 
-    let progreso = (posicion / preguntas.length) * 100;
+    let progreso = Math.round((posicion / preguntas.length) * 100);
     progressBar.style.width = progreso + "%";
     progressBar.textContent = progreso + "%";
 
     if (progreso >= 100) {
 
         //Le digo que si la barra de progreso llega al 100%, que muestre 100% para que no se pueda pasar
-        
+
         progressBar.innerHTML = "100%"
 
     }
