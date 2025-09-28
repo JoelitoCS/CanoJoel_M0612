@@ -205,7 +205,8 @@ botonTirarDado.addEventListener("click", tirarDado);
 
 function tirarDado() {
 
-    //Math floor para redondear hacia abajo y random para generar un numero aleatorio 1 y 6, aqui hago que posicion, para que se guarde la posicion del numero random del 1 al 6
+    //Math floor para redondear hacia abajo, entonces en este caso, solo con el random seria del 0 al 5.9, pero gracias al math floor, redondeo hacia abajo y sera 5, entonces después por eso le sumo 1, para que sea del 1 al 6 
+
     posicion = posicion + Math.floor(Math.random() * 6) + 1;
 
     if (posicion >= 20) {
@@ -213,8 +214,7 @@ function tirarDado() {
         posicion = 20;
 
         divMostrar.innerHTML = `<h2 id="ganarPartida">¡Felicidades! Has completado el juego de preguntas.</h2>`;
-        divPosicionActual.innerHTML = `<h2>Pregunta 20 de 20 </h2>`;
-        
+       
         //Para deshabilitar el boton despues de ganar de tirarDado
 
         botonTirarDado.disabled = true;
@@ -286,6 +286,7 @@ function actualizarTodo() {
     //Esto da, por ejemplo+, estoy en la posicion 5 (pregunta 5) de 20 (preguntas.length) dara 0.25, y si lo multiplico por 100 sera el porcentaje obtenido entonces le digo que a la barra de progreso, le cambie el css y que ponga el numero que haya salido de la operacion anterior y un % para saber que es un porcentaje, y después 
 
 
+    //Por cierto, utilizo math.round para redondear y que no haya problema con los decimales
     let progreso = Math.round((posicion / preguntas.length) * 100);
     progressBar.style.width = progreso + "%";
     progressBar.textContent = progreso + "%";
