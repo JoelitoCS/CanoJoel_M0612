@@ -211,7 +211,7 @@ function tirarDado() {
 
     if (posicion >= 20) {
 
-        posicion = 20;
+        posicion = 20; //Para no pasarme de pregunta, ejemplo 22 de 20, para que siempre que se acabe sea en el 20
 
         divMostrar.innerHTML = `<h2 id="ganarPartida">¡Felicidades! Has completado el juego de preguntas.</h2>`;
        
@@ -232,15 +232,14 @@ function tirarDado() {
 
 function mostrarPregunta() {
     
-    let pregunta = preguntas[posicion]; // pregunta actual
 
     divMostrar.innerHTML = `
-        <h2>${pregunta.pregunta}</h2>
+        <h2>${preguntas[posicion].pregunta}</h2>
         <h3>Respuestas:</h3>
         <div class="divRespuestas">
-            <button data-resp="0" class="botonesRespuesta">${pregunta.respuestas[0]}</button>
-            <button data-resp="1" class="botonesRespuesta">${pregunta.respuestas[1]}</button>
-            <button data-resp="2" class="botonesRespuesta">${pregunta.respuestas[2]}</button>
+            <button data-resp="0" class="botonesRespuesta">${preguntas[posicion].respuestas[0]}</button>
+            <button data-resp="1" class="botonesRespuesta">${preguntas[posicion].respuestas[1]}</button>
+            <button data-resp="2" class="botonesRespuesta">${preguntas[posicion].respuestas[2]}</button>
         </div>
     `;
 
