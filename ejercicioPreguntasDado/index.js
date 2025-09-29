@@ -222,7 +222,7 @@ function tirarDado() {
 
     } else {
 
-        mostrarPregunta(posicion);
+        mostrarPregunta(posicion); //le paso el numero random de mi pregunta
 
     }
 
@@ -232,6 +232,8 @@ function tirarDado() {
 
 function mostrarPregunta() {
     
+
+    //para la pregunta accedo a mi array, con posicion, que es el numero random, selecciono la pregunta actual, si toca 5, sera la pregunta 5,  y con .pregunta accedo al texto de la pregunta correspondiente, y para respuestas lo mismo pero accedo a la respuesta 1, 2 y 3
 
     divMostrar.innerHTML = `
         <h2>${preguntas[posicion].pregunta}</h2>
@@ -250,9 +252,11 @@ function mostrarPregunta() {
 
         botones[i].addEventListener("click", function (event) {
 
+            //convierto el resultado del event, que es string, en integer para que pueda utilizarlo para saber si la respuesta es la correcta o no, ya que utilizo numeros
             const respuestaSeleccionada = parseInt(event.target.dataset.resp);
 
-            if (respuestaSeleccionada === preguntas[2].correcta) {
+            
+            if (respuestaSeleccionada === preguntas[2].correcta /* accedo a mi array y le digo que entre en la seccion correcta y le pongo el .correcta para que pueda leer lo que contiene, en este caso 0, 1 o 2*/) {
 
                 posicionJugador = posicionJugador + 5;
 
@@ -260,6 +264,7 @@ function mostrarPregunta() {
 
                 posicionJugador = posicionJugador - 1;
 
+                //para que no hayan numeros negativos, si ya tengo 0 puntos y falloo que no me reste
                 if (posicionJugador < 0) {
 
                     posicionJugador = 0;
