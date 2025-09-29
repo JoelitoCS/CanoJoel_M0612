@@ -230,6 +230,7 @@ function tirarDado() {
 
 }
 
+
 function mostrarPregunta() {
     
 
