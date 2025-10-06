@@ -19,7 +19,7 @@
         <div class="col-md-3 col-6 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <div class="display-5 fw-bold">5</div>
+              <div class="display-5 fw-bold" id="divEstadistica1"></div>
               <div class="text-muted">Total Incidències</div>
             </div>
           </div>
@@ -27,7 +27,7 @@
         <div class="col-md-3 col-6 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <div class="display-5 fw-bold">2</div>
+              <div class="display-5 fw-bold" id="divEstadistica2"></div>
               <div class="text-muted">Obertes</div>
             </div>
           </div>
@@ -35,7 +35,7 @@
         <div class="col-md-3 col-6 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <div class="display-5 fw-bold">2</div>
+              <div class="display-5 fw-bold" id="divEstadistica3"></div>
               <div class="text-muted">En Procés</div>
             </div>
           </div>
@@ -43,7 +43,7 @@
         <div class="col-md-3 col-6 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <div class="display-5 fw-bold">1</div>
+              <div class="display-5 fw-bold" id="divEstadistica4"></div>
               <div class="text-muted">Tancades</div>
             </div>
           </div>
@@ -56,7 +56,7 @@
           <form class="row g-3">
             <div class="col-md-4">
               <label for="filtreEstat" class="form-label">Estat</label>
-              <select id="filtreEstat" class="form-select" disabled>
+              <select id="filtreEstat" class="form-select">
                 <option value="">Tots</option>
                 <option value="obert">Obert</option>
                 <option value="en_proces">En Procés</option>
@@ -65,7 +65,7 @@
             </div>
             <div class="col-md-4">
               <label for="filtrePrioritat" class="form-label">Prioritat</label>
-              <select id="filtrePrioritat" class="form-select" disabled>
+              <select id="filtrePrioritat" class="form-select">
                 <option value="">Totes</option>
                 <option value="alta">Alta</option>
                 <option value="mitjana">Mitjana</option>
@@ -73,7 +73,7 @@
               </select>
             </div>
             <div class="col-md-4 d-flex align-items-end">
-              <button type="button" class="btn btn-secondary w-100" disabled>Netejar Filtres</button>
+              <button type="button" class="btn btn-secondary w-100" >Netejar Filtres</button>
             </div>
           </form>
         </div>
