@@ -17,7 +17,7 @@ let incidencies = [
     id: 2,
     titol: "Problema amb la impressora",
     descripcio: "La impressora de l'oficina no imprimeix correctament",
-    estat: "en proces",
+    estat: "en_proces",
     prioritat: "mitjana",
     dataCreacio: "2024-01-14",
     assignat: "Maria López",
@@ -44,7 +44,7 @@ let incidencies = [
     id: 5,
     titol: "Recuperació de fitxers",
     descripcio: "S'han esborrat fitxers importants.",
-    estat: "en proces",
+    estat: "en_proces",
     prioritat: "alta",
     dataCreacio: "2024-03-18",
     assignat: "Carlos Ruiz",
@@ -53,7 +53,7 @@ let incidencies = [
 
 let coloresEstado = {
   "obert": "bg-success",       // verde con bootstrap
-  "en proces": "bg-warning",   // amarillo
+  "en_proces": "bg-warning",   // amarillo
   "tancat": "bg-secondary"     // gris
 };
 
@@ -190,17 +190,42 @@ filtroPrioridad.addEventListener("change", function (){
 
 filtroEstado.addEventListener("change", function (){
 
-  console.log("Has cambiado el estado")
-  if (filtroEstVal === filtroEstado){
+  let filtroEstVal = document.querySelector("#filtreEstat").value;
+  let tabla = document.querySelector("tbody");
 
-    tablaBody.innerHTML= `
-    
-    
-    
-    
-    `
+  console.log("Has cambiado la estado")
+
+  if (filtroEstVal === 'obert' || filtroEstVal === 'en_proces' || filtroEstVal === 'tancat'){
+
+    tabla.innerHTML = "";
+
+    for (let i = 0; i < incidencies.length; i++) {
+
+    if (incidencies[i].estat === filtroEstVal) {
+        const textoTruncado = incidencies[i].descripcio.slice(0, 25) + "...";
+
+        let tr = `
+        <tr>
+            <td>${incidencies[i].id}</td>
+            <td>${incidencies[i].titol}</td>
+            <td>${textoTruncado}</td>
+            <td><span class="badge ${coloresEstado[incidencies[i].estat]}">${incidencies[i].estat}</span></td>
+            <td><span class="badge ${coloresPrioritat[incidencies[i].prioritat]}">${incidencies[i].prioritat}</span></td>
+            <td>${incidencies[i].assignat}</td>
+            <td>${incidencies[i].dataCreacio}</td>
+            <td>
+                <button class="btn btn-sm btn-success">Edita</button>
+                <button class="btn btn-sm btn-danger">Elimina</button>
+            </td>
+        </tr>
+        `;
+
+        tabla.innerHTML += tr;
+    }
+  }
 
   }
+
   actualitzarEstadistiques();
   
 
@@ -234,7 +259,7 @@ function actualitzarEstadistiques(){
   incidenciesObertes.textContent = incidenciesObertesNum;
 
   const  incidenciesEnProces = document.querySelector("#divEstadistica3");
-  const incidenciesEnProcesNum = incidencies.filter((incidencia)=> incidencia.estat == "en proces").length;
+  const incidenciesEnProcesNum = incidencies.filter((incidencia)=> incidencia.estat == "en_proces").length;
   incidenciesEnProces.textContent = incidenciesEnProcesNum;
 
   const  incidenciesTancades = document.querySelector("#divEstadistica4");
