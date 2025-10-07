@@ -64,8 +64,8 @@ let coloresPrioritat = {
 }
 
 renderitzarTaula();
-cambiarFiltro();
 actualitzarEstadistiques();
+cambiarFiltro();
 netejarFiltres();
 
 
@@ -194,16 +194,23 @@ filtroEstado.addEventListener("change", function (){
   let tabla = document.querySelector("tbody");
 
   console.log("Has cambiado la estado")
-
+  // esto es una condicion que le digo, si filtroEstVal, que contiene el value de filtreEstat, que es el select del estado, donde estan todos los estados ahi, si son exactamente obert, en proces o tancat entonces que me haga de nuevo la tabla con todo filtrado
   if (filtroEstVal === 'obert' || filtroEstVal === 'en_proces' || filtroEstVal === 'tancat'){
 
+    //antes de hacer el bucle limpio la variable tabla para cada vez que hagamos un cambio y filtre correctamente, ya que si no estuviese lo que haria seria añadir en vez de filtrar
     tabla.innerHTML = "";
 
+    //recorro mi array
     for (let i = 0; i < incidencies.length; i++) {
 
+    //esto es para validar que lo que contiene la propiedad estat, sea igual a lo que hemos seleccionado en el select de estado
+
     if (incidencies[i].estat === filtroEstVal) {
+
+        //hacemos el truncado, que empieze desde 0 y acabe en el carácter 25, incluyendo espacios, y posteriormente añada puntos suspensivos
         const textoTruncado = incidencies[i].descripcio.slice(0, 25) + "...";
 
+        //pongo la tabla dinámica 
         let tr = `
         <tr>
             <td>${incidencies[i].id}</td>
@@ -220,16 +227,20 @@ filtroEstado.addEventListener("change", function (){
         </tr>
         `;
 
+        //y lo añado al HTML con inner de tabla en tr que es donde contengo la tabla dinámica
         tabla.innerHTML += tr;
     }
   }
 
   }
 
+  //llamo a la funcionmn actualizarEstadistiques para filtrar bien
   actualitzarEstadistiques();
   
 
 });
+
+
 
 }
 
