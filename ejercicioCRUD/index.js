@@ -1,3 +1,8 @@
+//import {sumar,restar} from "./funciones/auxiliares.js"
+//Sirve para importar las funciones que tengo en otro archivo
+
+//sumar(3,5);
+
 let incidencies = [
   {
     id: 1,
@@ -28,22 +33,22 @@ let incidencies = [
   },
   {
     id: 4,
-    titol: "Canvi de monitor",
-    descripcio: "El monitor mostra línies estranyes",
+    titol: "Actualització de programari",
+    descripcio: "El monitor mostra línies estranyes.",
     estat: "obert",
     prioritat: "mitjana",
-    dataCreacio: "2025-09-23",
+    dataCreacio: "2024-02-23",
     assignat: "Anna Torres",
   },
   {
     id: 5,
     titol: "Recuperació de fitxers",
-    descripcio: "S'han esborrat fitxers importants",
-    estat: "tancat",
+    descripcio: "S'han esborrat fitxers importants.",
+    estat: "en proces",
     prioritat: "alta",
-    dataCreacio: "2025-09-23",
-    assignat: "	Carlos Ruiz",
-  },
+    dataCreacio: "2024-03-18",
+    assignat: "Carlos Ruiz",
+  }
 ];
 
 let coloresEstado = {
@@ -59,7 +64,10 @@ let coloresPrioritat = {
 }
 
 renderitzarTaula();
+cambiarFiltro();
 actualitzarEstadistiques();
+netejarFiltres();
+
 
 function renderitzarTaula() {
 
@@ -69,7 +77,7 @@ function renderitzarTaula() {
 
   if (incidencies.length === 0) {
 
-    noIncidencias.innerHTML = "<h2 style='font-size:15px;'>No data.</h2>"
+    noIncidencias.innerHTML = "<tr>No data.</tr>"
 
   } else {
 
@@ -111,38 +119,108 @@ function renderitzarTaula() {
   }
 
   
-  let botonEditar = document.querySelector(".btn-success");
+  document.querySelector("tbody").addEventListener("click", function(event) {
 
-  //cojo el botoneditar y le meto que si le hago click, entonces hago delegación de eventos, con event.target.classlist y le digo que si contiene la clase btn-success, entonces que haga lo que le diga
+  if (event.target.classList.contains("btn-success")) {
 
-  botonEditar.addEventListener("click", function (event) {
+    console.log("Has pulsado el botón de editar")
 
-    if (event.target.classList.contains("btn-success")) {
+  }
 
-      console.log("Has pulsado el boton de editar");
+  if (event.target.classList.contains("btn-danger")) {
 
+    console.log("Has pulsado el botón de eliminar")
 
-    }
+  }
 
-  });
-
-
-  //lo mismo que lo anterior
-
-  let botonEliminar = document.querySelector(".btn-danger");
-
-  botonEliminar.addEventListener("click", function (event) {
-
-    if (event.target.classList.contains("btn-danger")) {
-
-      console.log("Has pulsado el boton de eliminar");
-
-    }
-
-  });
+});
 
 }
 
+
+function cambiarFiltro(){
+
+let filtroPrioridad = document.querySelector("#filtrePrioritat");
+let filtroEstado = document.querySelector("#filtreEstat");
+let filtroEstVal = document.querySelector("#filtreEstat").value;
+let tablaBody = document.querySelector("tbody");
+
+
+filtroPrioridad.addEventListener("change", function (){
+
+  let filtroPrioVal = document.querySelector("#filtrePrioritat").value;
+  let tabla = document.querySelector("tbody");
+
+  console.log("Has cambiado la prioridad")
+
+  if (filtroPrioVal === 'alta' || filtroPrioVal === 'mitjana' || filtroPrioVal === 'baixa'){
+
+    tabla.innerHTML = "";
+
+    for (let i = 0; i < incidencies.length; i++) {
+
+    if (incidencies[i].prioritat === filtroPrioVal) {
+        const textoTruncado = incidencies[i].descripcio.slice(0, 25) + "...";
+
+        let tr = `
+        <tr>
+            <td>${incidencies[i].id}</td>
+            <td>${incidencies[i].titol}</td>
+            <td>${textoTruncado}</td>
+            <td><span class="badge ${coloresEstado[incidencies[i].estat]}">${incidencies[i].estat}</span></td>
+            <td><span class="badge ${coloresPrioritat[incidencies[i].prioritat]}">${incidencies[i].prioritat}</span></td>
+            <td>${incidencies[i].assignat}</td>
+            <td>${incidencies[i].dataCreacio}</td>
+            <td>
+                <button class="btn btn-sm btn-success">Edita</button>
+                <button class="btn btn-sm btn-danger">Elimina</button>
+            </td>
+        </tr>
+        `;
+
+        tabla.innerHTML += tr;
+    }
+  }
+
+  }
+
+  actualitzarEstadistiques();
+
+});
+
+filtroEstado.addEventListener("change", function (){
+
+  console.log("Has cambiado el estado")
+  if (filtroEstVal === filtroEstado){
+
+    tablaBody.innerHTML= `
+    
+    
+    
+    
+    `
+
+  }
+  actualitzarEstadistiques();
+  
+
+});
+
+}
+
+
+
+function netejarFiltres(){
+
+    const btnLimpiar = document.querySelector(".btn-secondary");
+
+    btnLimpiar.addEventListener("click", function() {
+    filtreEstat.value = "";
+    filtrePrioritat.value = "";
+    renderitzarTaula(); // muestra todas las incidencias
+});
+
+}
 
 
 function actualitzarEstadistiques(){
@@ -164,10 +242,4 @@ function actualitzarEstadistiques(){
   incidenciesTancades.textContent = incidenciesTancadesNum;
 
   
-
-
 }
-
-
-
-
