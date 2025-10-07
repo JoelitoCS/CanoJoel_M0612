@@ -145,7 +145,7 @@ let filtroEstado = document.querySelector("#filtreEstat");
 let filtroEstVal = document.querySelector("#filtreEstat").value;
 let tablaBody = document.querySelector("tbody");
 
-
+//hacer esto mismo para filtroEstado
 filtroPrioridad.addEventListener("change", function (){
 
   let filtroPrioVal = document.querySelector("#filtrePrioritat").value;
