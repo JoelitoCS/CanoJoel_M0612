@@ -118,164 +118,172 @@ function renderitzarTaula() {
 
   }
 
-  
-  document.querySelector("tbody").addEventListener("click", function(event) {
 
-  if (event.target.classList.contains("btn-success")) {
+  document.querySelector("tbody").addEventListener("click", function (event) {
 
-    console.log("Has pulsado el botón de editar")
+    if (event.target.classList.contains("btn-success")) {
 
-  }
+      console.log("Has pulsado el botón de editar")
 
-  if (event.target.classList.contains("btn-danger")) {
+    }
 
-    console.log("Has pulsado el botón de eliminar")
+    if (event.target.classList.contains("btn-danger")) {
 
-  }
+      //consigo la fila mas cercana (tr), y a esa fila que yo le haya pulsado el boton, lo que hara acto seguido es el .remove, que hara que se borre esa incidencia
+      
+      event.target.closest("tr").remove();
+      console.log("Fila eliminada");
 
-});
+      // Actualizamos estadísticas si es necesario
+      actualitzarEstadistiques();
+
+    }
+
+  });
 
 }
 
 
-function cambiarFiltro(){
+function cambiarFiltro() {
 
-let filtroPrioridad = document.querySelector("#filtrePrioritat");
-let filtroEstado = document.querySelector("#filtreEstat");
-let filtroEstVal = document.querySelector("#filtreEstat").value;
-let tablaBody = document.querySelector("tbody");
+  let filtroPrioridad = document.querySelector("#filtrePrioritat");
+  let filtroEstado = document.querySelector("#filtreEstat");
+  let tablaBody = document.querySelector("tbody");
 
-//hacer esto mismo para filtroEstado
-filtroPrioridad.addEventListener("change", function (){
+  // --- FILTRO POR PRIORIDAD ---
+  filtroPrioridad.addEventListener("change", function () {
 
-  let filtroPrioVal = document.querySelector("#filtrePrioritat").value;
-  let tabla = document.querySelector("tbody");
+    console.log("Has cambiado la prioridad");
 
-  console.log("Has cambiado la prioridad")
+    let filtroPrioVal = filtroPrioridad.value;
+    let filtroEstVal = filtroEstado.value;
 
-  if (filtroPrioVal === 'alta' || filtroPrioVal === 'mitjana' || filtroPrioVal === 'baixa'){
+    //filtramos nuestra array y le decimos que haga una funcion donde creamos las variabless coincidePrioritat y coincideEstat, cada una dice que si filtroPrioVal o filtroEstVal es igual a lo que esta en mi array incidencies en prioritat, que sera obert, tancat, en proces etc, entonces que me devuelva los valores de esas variables
 
-    tabla.innerHTML = "";
+    //cabe recalcar que también decimos que filtroPrioVal y filtroEstVal esten vacios porque asi cuando no haya ninguna prioridad seleccionada pues que se muestren todas las prioridades en este caso
 
-    for (let i = 0; i < incidencies.length; i++) {
+    let incidenciesFiltrades = incidencies.filter(function (inc) {
 
-    if (incidencies[i].prioritat === filtroPrioVal) {
-        const textoTruncado = incidencies[i].descripcio.slice(0, 25) + "...";
+      let coincidePrioritat =(filtroPrioVal === "" || inc.prioritat === filtroPrioVal);
 
-        let tr = `
+      let coincideEstat =(filtroEstVal === "" || inc.estat === filtroEstVal);
+
+      return coincidePrioritat && coincideEstat;
+    });
+
+    tablaBody.innerHTML = "";
+
+    // Recorremos con for clásico
+    for (let i = 0; i < incidenciesFiltrades.length; i++) {
+      let inc = incidenciesFiltrades[i];
+      let textoTruncado = inc.descripcio.slice(0, 25) + "...";
+
+      let tr = `
         <tr>
-            <td>${incidencies[i].id}</td>
-            <td>${incidencies[i].titol}</td>
-            <td>${textoTruncado}</td>
-            <td><span class="badge ${coloresEstado[incidencies[i].estat]}">${incidencies[i].estat}</span></td>
-            <td><span class="badge ${coloresPrioritat[incidencies[i].prioritat]}">${incidencies[i].prioritat}</span></td>
-            <td>${incidencies[i].assignat}</td>
-            <td>${incidencies[i].dataCreacio}</td>
-            <td>
-                <button class="btn btn-sm btn-success">Edita</button>
-                <button class="btn btn-sm btn-danger">Elimina</button>
-            </td>
+          <td>${inc.id}</td>
+          <td>${inc.titol}</td>
+          <td>${textoTruncado}</td>
+          <td><span class="badge ${coloresEstado[inc.estat]}">${inc.estat}</span></td>
+          <td><span class="badge ${coloresPrioritat[inc.prioritat]}">${inc.prioritat}</span></td>
+          <td>${inc.assignat}</td>
+          <td>${inc.dataCreacio}</td>
+          <td>
+              <button class="btn btn-sm btn-success">Edita</button>
+              <button class="btn btn-sm btn-danger">Elimina</button>
+          </td>
         </tr>
-        `;
-
-        tabla.innerHTML += tr;
+      `;
+      tablaBody.innerHTML += tr;
     }
-  }
 
-  }
+    actualitzarEstadistiques();
+  });
 
-  actualitzarEstadistiques();
 
-});
+  // --- FILTRO POR ESTADO ---
+  filtroEstado.addEventListener("change", function () {
 
-filtroEstado.addEventListener("change", function (){
+    console.log("Has cambiado el estado");
 
-  let filtroEstVal = document.querySelector("#filtreEstat").value;
-  let tabla = document.querySelector("tbody");
+    let filtroPrioVal = filtroPrioridad.value;
+    let filtroEstVal = filtroEstado.value;
 
-  console.log("Has cambiado la estado")
-  // esto es una condicion que le digo, si filtroEstVal, que contiene el value de filtreEstat, que es el select del estado, donde estan todos los estados ahi, si son exactamente obert, en proces o tancat entonces que me haga de nuevo la tabla con todo filtrado
-  if (filtroEstVal === 'obert' || filtroEstVal === 'en_proces' || filtroEstVal === 'tancat'){
+    // Filter con function y lógica AND
+    //lo mismo que lo anterior pero esta vez para el otro select de estado
+    let incidenciesFiltrades = incidencies.filter(function (inc) {
 
-    //antes de hacer el bucle limpio la variable tabla para cada vez que hagamos un cambio y filtre correctamente, ya que si no estuviese lo que haria seria añadir en vez de filtrar
-    tabla.innerHTML = "";
+      let coincidePrioritat = (filtroPrioVal === "" || inc.prioritat === filtroPrioVal);
 
-    //recorro mi array
-    for (let i = 0; i < incidencies.length; i++) {
+      let coincideEstat = (filtroEstVal === "" || inc.estat === filtroEstVal);
 
-    //esto es para validar que lo que contiene la propiedad estat, sea igual a lo que hemos seleccionado en el select de estado
+      return coincidePrioritat && coincideEstat;
+    });
 
-    if (incidencies[i].estat === filtroEstVal) {
+    tablaBody.innerHTML = "";
 
-        //hacemos el truncado, que empieze desde 0 y acabe en el carácter 25, incluyendo espacios, y posteriormente añada puntos suspensivos
-        const textoTruncado = incidencies[i].descripcio.slice(0, 25) + "...";
+    // Recorremos con for mi array de Filtrades
+    for (let i = 0; i < incidenciesFiltrades.length; i++) {
+      let inc = incidenciesFiltrades[i];
+      let textoTruncado = inc.descripcio.slice(0, 25) + "...";
 
-        //pongo la tabla dinámica 
-        let tr = `
+      let tr = `
         <tr>
-            <td>${incidencies[i].id}</td>
-            <td>${incidencies[i].titol}</td>
-            <td>${textoTruncado}</td>
-            <td><span class="badge ${coloresEstado[incidencies[i].estat]}">${incidencies[i].estat}</span></td>
-            <td><span class="badge ${coloresPrioritat[incidencies[i].prioritat]}">${incidencies[i].prioritat}</span></td>
-            <td>${incidencies[i].assignat}</td>
-            <td>${incidencies[i].dataCreacio}</td>
-            <td>
-                <button class="btn btn-sm btn-success">Edita</button>
-                <button class="btn btn-sm btn-danger">Elimina</button>
-            </td>
+          <td>${inc.id}</td>
+          <td>${inc.titol}</td>
+          <td>${textoTruncado}</td>
+          <td><span class="badge ${coloresEstado[inc.estat]}">${inc.estat}</span></td>
+          <td><span class="badge ${coloresPrioritat[inc.prioritat]}">${inc.prioritat}</span></td>
+          <td>${inc.assignat}</td>
+          <td>${inc.dataCreacio}</td>
+          <td>
+              <button class="btn btn-sm btn-success">Edita</button>
+              <button class="btn btn-sm btn-danger">Elimina</button>
+          </td>
         </tr>
-        `;
-
-        //y lo añado al HTML con inner de tabla en tr que es donde contengo la tabla dinámica
-        tabla.innerHTML += tr;
+      `;
+      tablaBody.innerHTML += tr;
     }
-  }
 
-  }
-
-  //llamo a la funcionmn actualizarEstadistiques para filtrar bien
-  actualitzarEstadistiques();
-  
-
-});
-
-
+    actualitzarEstadistiques();
+  });
 
 }
 
 
 
-function netejarFiltres(){
 
-    const btnLimpiar = document.querySelector(".btn-secondary");
 
-    btnLimpiar.addEventListener("click", function() {
+function netejarFiltres() {
+
+  const btnLimpiar = document.querySelector(".btn-secondary");
+
+  btnLimpiar.addEventListener("click", function () {
     filtreEstat.value = "";
     filtrePrioritat.value = "";
     renderitzarTaula(); // muestra todas las incidencias
-});
+  });
 
 }
 
 
-function actualitzarEstadistiques(){
+function actualitzarEstadistiques() {
 
-  const  totalIncidencies = document.querySelector("#divEstadistica1");
+  const totalIncidencies = document.querySelector("#divEstadistica1");
 
   totalIncidencies.textContent = `${incidencies.length}`;
 
-  const  incidenciesObertes = document.querySelector("#divEstadistica2");
-  const incidenciesObertesNum = incidencies.filter((incidencia)=> incidencia.estat == "obert").length;
+  const incidenciesObertes = document.querySelector("#divEstadistica2");
+  const incidenciesObertesNum = incidencies.filter((incidencia) => incidencia.estat == "obert").length;
   incidenciesObertes.textContent = incidenciesObertesNum;
 
-  const  incidenciesEnProces = document.querySelector("#divEstadistica3");
-  const incidenciesEnProcesNum = incidencies.filter((incidencia)=> incidencia.estat == "en_proces").length;
+  const incidenciesEnProces = document.querySelector("#divEstadistica3");
+  const incidenciesEnProcesNum = incidencies.filter((incidencia) => incidencia.estat == "en_proces").length;
   incidenciesEnProces.textContent = incidenciesEnProcesNum;
 
-  const  incidenciesTancades = document.querySelector("#divEstadistica4");
-  const incidenciesTancadesNum = incidencies.filter((incidencia)=> incidencia.estat == "tancat").length;
+  const incidenciesTancades = document.querySelector("#divEstadistica4");
+  const incidenciesTancadesNum = incidencies.filter((incidencia) => incidencia.estat == "tancat").length;
   incidenciesTancades.textContent = incidenciesTancadesNum;
 
-  
+
 }
+
