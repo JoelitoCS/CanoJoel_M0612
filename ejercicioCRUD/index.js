@@ -325,7 +325,7 @@ function obrirModalNova(){
     let btnAñadir = document.querySelector("#btnAfegirIncidencia");
 
     btnAñadir.addEventListener("click", function(){
-      const nuevoID = document.querySelector("#incidencia-id").value;
+      
       const nuevoTitulo = document.querySelector("#incidencia-titol").value;
       const nuevaDescripcion = String(document.querySelector("#incidencia-descripcio").value);
       const nuevoEstado = document.querySelector("#incidencia-estat").value;
@@ -335,7 +335,7 @@ function obrirModalNova(){
 
 
       incidencies.push({
-        id: nuevoID,
+        id: incidencies.length + 1,
         titol: nuevoTitulo,
         descripcio: nuevaDescripcion ,
         estat: nuevoEstado,
@@ -345,13 +345,12 @@ function obrirModalNova(){
         
       })
 
-      
+      renderitzarTaula();
 
     });
     
-    console.log(incidencies)
     
-    renderitzarTaula();
+    
 
   }
 
