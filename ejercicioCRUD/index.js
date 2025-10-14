@@ -63,11 +63,14 @@ let coloresPrioritat = {
   "baixa": "bg-primary"
 }
 
+
+
 renderitzarTaula();
 actualitzarEstadistiques();
 cambiarFiltro();
 netejarFiltres();
-
+obrirModalNova();
+afegirNovaIncidencia();
 
 function renderitzarTaula() {
 
@@ -286,4 +289,69 @@ function actualitzarEstadistiques() {
 
 
 }
+
+function obrirModalNova(){
+  
+  const btnNovaIncidencia = document.querySelector(".btn-primary");
+  btnNovaIncidencia.addEventListener("click", function(e){
+
+      const exampleModal = document.getElementById('exampleModal')
+      if (exampleModal) {
+      exampleModal.addEventListener('show.bs.modal', event => {
+      // Button that triggered the modal
+      const button = event.relatedTarget
+      // Extract info from data-bs-* attributes
+      const recipient = button.getAttribute('data-bs-whatever')
+      // If necessary, you could initiate an Ajax request here
+      // and then do the updating in a callback.
+
+      // Update the modal's content.
+      const modalTitle = exampleModal.querySelector('.modal-title')
+      const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+      modalTitle.textContent = `New message to ${recipient}`
+      modalBodyInput.value = recipient
+  })
+  }
+
+
+
+  });
+
+}
+
+  function afegirNovaIncidencia(){
+
+    let btnAñadir = document.querySelector("#btnAfegirIncidencia");
+
+    btnAñadir.addEventListener("click", function(){
+      const nuevoID = document.querySelector("#incidencia-id").value;
+      const nuevoTitulo = document.querySelector("#incidencia-titol").value;
+      const nuevaDescripcion = String(document.querySelector("#incidencia-descripcio").value);
+      const nuevoEstado = document.querySelector("#incidencia-estat").value;
+      const nuevaPrioridad = document.querySelector("#incidencia-prioritat").value;
+      const nuevoAsignado = String(document.querySelector("#incidencia-assignat").value);
+      const nuevaFecha = document.querySelector("#incidencia-data").value;
+
+
+      incidencies.push({
+        id: nuevoID,
+        titol: nuevoTitulo,
+        descripcio: nuevaDescripcion ,
+        estat: nuevoEstado,
+        prioritat: nuevaPrioridad,
+        assignat: nuevoAsignado,
+        dataCreacio: nuevaFecha,
+        
+      })
+
+      
+
+    });
+    
+    console.log(incidencies)
+    
+    renderitzarTaula();
+
+  }
 
