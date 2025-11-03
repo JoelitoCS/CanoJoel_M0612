@@ -24,7 +24,7 @@ const posiciones = [
   { x: 1212, y: 431, function: "Normal" },
   { x: 1215, y: 528, function: "Normal" },
   { x: 1125, y: 527, function: "Normal" },
-  { x: 1043, y: 508, function: "perderTurno" },
+  { x: 1043, y: 508, function: "pierdeTurno" },
   { x: 936, y: 525, function: "Normal" },
   { x: 854, y: 525, function: "Normal" },
   { x: 824, y: 459, function: "Normal" },
@@ -39,7 +39,7 @@ const posiciones = [
   { x: 1117, y: 420, function: "retocede27" },
   { x: 1040, y: 420, function: "tirarOtraVez" },
   { x: 973, y: 439, function: "Normal" },
-  { x: 906, y: 416, function: "Normal" },
+  { x: 906, y: 416, function: "retrocede20" },
   { x: 904, y: 356, function: "Normal" },
   { x: 970, y: 358, function: "Normal" },
   { x: 1040, y: 359, function: "finalJuego" },
@@ -147,8 +147,238 @@ function moverFicha(jugador, posicion) {
   // Verificar si la casilla tiene una función especial, empezamos por la segunda
   //si casilla es la segunda (salta21) haz: 
 
+
+  //le hago un setTimeout para decirle que a todas estas funciones pues que la animacion tenga una duración de 1000ms, asi no apareceria la ficha directamente en la casilla que sea
   setTimeout(() => {
-      if (casilla.function === "salta21") {
+
+      if (casilla.function ==="Normal"){
+
+        const preguntas = [
+          // HTML
+          {
+              pregunta: "¿Qué significa HTML y para qué se utiliza?",
+              respuestas: [
+                  "HyperText Markup Language, para estructurar páginas web.",
+                  "Home Tool Markup Language, para crear imágenes.",
+                  "Hyper Transfer Markup Language, para transferir archivos."
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Cuál es la función de la etiqueta head en un documento HTML?",
+              respuestas: [
+                  "Mostrar el contenido principal de la página.",
+                  "Contener metadatos y enlaces a recursos externos.",
+                  "Crear enlaces de navegación."
+              ],
+              correcta: 1
+          },
+          {
+              pregunta: "¿Cómo se inserta una imagen en HTML?",
+              respuestas: [
+                  "img src='ruta'",
+                  "image src='ruta'",
+                  "src img='ruta'"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Qué atributo se usa para abrir un enlace en una nueva pestaña?",
+              respuestas: [
+                  "target='_blank'",
+                  "newtab='true'",
+                  "open='new'"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Para qué sirve la etiqueta form?",
+              respuestas: [
+                  "Para crear tablas.",
+                  "Para crear formularios.",
+                  "Para crear listas."
+              ],
+              correcta: 1
+          },
+          // CSS
+          {
+              pregunta: "¿Qué es CSS y cuál es su propósito?",
+              respuestas: [
+                  "Un lenguaje para programar aplicaciones.",
+                  "Un lenguaje para dar estilo a páginas web.",
+                  "Un lenguaje para crear bases de datos."
+              ],
+              correcta: 1
+          },
+          {
+              pregunta: "¿Cómo se aplica una clase CSS a un elemento HTML?",
+              respuestas: [
+                  "Usando el atributo class.",
+                  "Usando el atributo style.",
+                  "Usando el atributo css."
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Qué propiedad CSS se usa para cambiar el color de fondo?",
+              respuestas: [
+                  "background-color",
+                  "color",
+                  "font-color"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Cómo se centra un elemento horizontalmente usando CSS?",
+              respuestas: [
+                  "margin: auto;",
+                  "center: true;",
+                  "align: center;"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Qué diferencia hay entre margin y padding?",
+              respuestas: [
+                  "Margin es espacio interno, padding es externo.",
+                  "Margin es espacio externo, padding es interno.",
+                  "No hay diferencia."
+              ],
+              correcta: 1
+          },
+          // JavaScript
+          {
+              pregunta: "¿Qué es JavaScript y para qué se utiliza?",
+              respuestas: [
+                  "Un lenguaje para dar interactividad a páginas web.",
+                  "Un lenguaje para crear hojas de estilo.",
+                  "Un lenguaje para estructurar contenido."
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Cómo se declara una variable en JavaScript?",
+              respuestas: [
+                  "var nombre;",
+                  "variable nombre;",
+                  "declare nombre;"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Qué método se usa para mostrar un mensaje emergente en el navegador?",
+              respuestas: [
+                  "alert()",
+                  "show()",
+                  "popup()"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Cómo se accede a un elemento HTML por su id usando JavaScript?",
+              respuestas: [
+                  "getElementById()",
+                  "getById()",
+                  "queryId()"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Qué es una función en JavaScript?",
+              respuestas: [
+                  "Un bloque de código reutilizable.",
+                  "Un tipo de variable.",
+                  "Un método para crear estilos."
+              ],
+              correcta: 0
+          },
+          // Mixtas
+          {
+              pregunta: "¿Cómo se enlaza un archivo CSS externo en HTML?",
+              respuestas: [
+                  "link rel='stylesheet' href='estilos.css'",
+                  "css src='estilos.css'",
+                  "style href='estilos.css'"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Cómo se enlaza un archivo JavaScript externo en HTML?",
+              respuestas: [
+                  "script src='script.js'></script",
+                  "js src='script.js'",
+                  "javascript href='script.js'"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Qué es el DOM?",
+              respuestas: [
+                  "Un modelo de objetos para documentos HTML.",
+                  "Un tipo de variable en JavaScript.",
+                  "Una hoja de estilos."
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Qué selector CSS selecciona todos los elementos de tipo párrafo?",
+              respuestas: [
+                  "p {}",
+                  "#p {}",
+                  ".p {}"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Cómo se comenta una línea en JavaScript?",
+              respuestas: [
+                  "// Esto es un comentario",
+                  "!-- Esto es un comentario --",
+                  "/* Esto es un comentario */"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Cómo se hacen arrowFunctions?",
+              respuestas: [
+                  "=>",
+                  "->",
+                  ">-"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Cómo se le puede llamar a un evento?",
+              respuestas: [
+                  "e",
+                  "event",
+                  "Las dos"
+              ],
+              correcta: 2
+          },
+          {
+              pregunta: "¿Cómo accedo a un objeto de mi array?",
+              respuestas: [
+                "array[index]",
+                "event",
+                "Las dos"
+              ],
+              correcta: 0
+          },
+          {
+              pregunta: "¿Qué método se utiliza para agregar un elemento al final de un array en JavaScript?",
+              respuestas: [
+                "array.pop()",
+                "array.push()",
+                "array.unshift()"
+                
+              ],
+              correcta: 1
+          }
+        ]
+      
+
+      }else if (casilla.function === "salta21") {
 
       // Saltar directamente a la posición 21
 
@@ -166,15 +396,141 @@ function moverFicha(jugador, posicion) {
         posicionJugador2 = 21;
 
       }
+
     }else if (casilla.function === "pierdeTurno"){
 
-      // Saltar el turno del otro jugador
+      // Tira dos veces
       turnoJugador = !turnoJugador;
 
 
     }else if (casilla.function ==="avanzaEstrella"){
       
-      
+      nuevaCasilla = posiciones[10]; // la 11 es 10
+      ficha.style.left = `${nuevaCasilla.x}px`;
+      ficha.style.top = `${nuevaCasilla.y}px`;
+
+      // Actualizar también la posición del jugador
+      if (jugador === 1) {
+
+        posicionJugador1 = 11;
+
+      } else {
+
+        posicionJugador2 = 11;
+
+      }
+
+
+    }else if (casilla.function === "volverPrincipio"){
+
+      nuevaCasilla = posiciones[0]; // la 1 es 0
+      ficha.style.left = `${nuevaCasilla.x}px`;
+      ficha.style.top = `${nuevaCasilla.y}px`;
+
+      // Actualizar también la posición del jugador
+      if (jugador === 1) {
+
+        posicionJugador1 = 1;
+
+      } else {
+
+        posicionJugador2 = 1;
+
+      }
+
+    }else if(casilla.function ==="salta29"){
+
+      nuevaCasilla = posiciones[28]; // la 29 es 28
+      ficha.style.left = `${nuevaCasilla.x}px`;
+      ficha.style.top = `${nuevaCasilla.y}px`;
+
+      // Actualizar también la posición del jugador
+      if (jugador === 1) {
+
+        posicionJugador1 = 29;
+
+      } else {
+
+        posicionJugador2 = 29;
+
+      }
+
+
+    }else if (casilla.function === "avanzar24"){
+
+      nuevaCasilla = posiciones[23]; // la 24 es 23
+      ficha.style.left = `${nuevaCasilla.x}px`;
+      ficha.style.top = `${nuevaCasilla.y}px`;
+
+      // Actualizar también la posición del jugador
+      if (jugador === 1) {
+
+        posicionJugador1 = 24;
+
+      } else {
+
+        posicionJugador2 = 24;
+
+      }
+
+
+    }else if (casilla.function ==="retrocede9"){
+
+      nuevaCasilla = posiciones[8]; // la 9 es 8
+      ficha.style.left = `${nuevaCasilla.x}px`;
+      ficha.style.top = `${nuevaCasilla.y}px`;
+
+      // Actualizar también la posición del jugador
+      if (jugador === 1) {
+
+        posicionJugador1 = 9;
+
+      } else {
+
+        posicionJugador2 = 9;
+
+      }
+
+
+    }else if (casilla.function ==="retrocede27"){
+
+      nuevaCasilla = posiciones[26]; // la 27 es 26
+      ficha.style.left = `${nuevaCasilla.x}px`;
+      ficha.style.top = `${nuevaCasilla.y}px`;
+
+      // Actualizar también la posición del jugador
+      if (jugador === 1) {
+
+        posicionJugador1 = 27;
+
+      } else {
+
+        posicionJugador2 = 27;
+
+      }
+
+
+    }else if (casilla.function ==="tirarOtraVez"){
+
+      // Tira dos veces
+      turnoJugador = !turnoJugador;
+
+    }else if (casilla.function ==="retrocede20"){
+
+      nuevaCasilla = posiciones[19]; // la 20 es 19
+      ficha.style.left = `${nuevaCasilla.x}px`;
+      ficha.style.top = `${nuevaCasilla.y}px`;
+
+      // Actualizar también la posición del jugador
+      if (jugador === 1) {
+
+        posicionJugador1 = 20;
+
+      } else {
+
+        posicionJugador2 = 20;
+
+      }
 
 
     }

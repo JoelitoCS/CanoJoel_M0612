@@ -98,3 +98,27 @@ body {
 h1, h2{
     margin-left: 50px;
 }
+
+#mostrarPreguntasJugador1{
+  position: fixed;
+  align-items: flex-start;
+  padding: 250px;
+  background-color: red;
+  height: 100%;
+  max-height: 100%;
+  top: 0;
+  left: 0;
+  
+}
+
+#mostrarPreguntasJugador2{
+  position: fixed;
+  align-items: flex-end;
+  padding: 250px;
+  background-color: blue;
+  height: 100%;
+  max-height: 100%;
+  top: 0;
+  right: 0;
+  
+}
