@@ -1,0 +1,100 @@
+
+body {
+  text-align: center;
+  background-color: aqua;
+  font-family: Arial, sans-serif;
+  justify-content: center;
+}
+
+#tablero img {
+  width: 800px;
+  
+}
+
+#tirarDado {
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px gray;
+  background-color: lightgreen;
+  transition: 0.3s;
+  margin-left: 50px;
+}
+
+#tirarDado:hover {
+  background-color: limegreen;
+  transition: 0.3s;
+}
+
+#resultadoDado {
+  margin-top: 15px;
+  font-size: 22px;
+}
+
+#resultadoDado {
+  margin-top: 15px;
+  font-size: 22px;
+  color: green;
+}
+
+#fichaJugador1 {
+  width: 40px;
+  height: 40px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 100px; /* Posición inicial */
+  left: 100px; /* Posición inicial */
+  transition: left 0.5s, top 0.5s;
+}
+
+#fichaJugador2 {
+  width: 40px;
+  height: 40px;
+  background-color: blue;
+  border-radius: 50%;
+  position: absolute;
+  top: 100px; /* Posición inicial */
+  left: 150px; /* Posición inicial */
+  transition: left 0.5s, top 0.5s;
+}
+
+#dadoJugador1 {
+
+  border: 1px solid;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+
+}
+
+#dadoJugador2 {
+
+  border: 1px solid;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  
+}
+
+#posicionCSS{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    margin-left: 50px;
+}
+
+h1, h2{
+    margin-left: 50px;
+}
