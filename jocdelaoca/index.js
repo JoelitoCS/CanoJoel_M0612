@@ -420,7 +420,7 @@ function moverFicha(jugador, posicion) {
                 tirarDado();
 
             });
-      }
+        }
       
 
       }else if (casilla.function === "salta21") {
