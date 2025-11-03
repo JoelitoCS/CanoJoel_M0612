@@ -132,14 +132,20 @@ function renderitzarTaula() {
 
     if (event.target.classList.contains("btn-danger")) {
 
-      //consigo la fila mas cercana (tr), y a esa fila que yo le haya pulsado el boton, lo que hara acto seguido es el .remove, que hara que se borre esa incidencia
-      
-      event.target.closest("tr").remove();
-      console.log("Fila eliminada");
+       // Consigue la fila y el id de la incidencia, COMO dice la propiedad, 
+       // coge lo mas cercano al tr, entonces como pulsas en un boton coge, 
+       // el tr entero del boton que pulses
 
-      // Actualizamos estadísticas si es necesario
-      actualitzarEstadistiques();
+        const fila = event.target.closest("tr");
+        const idIncidencia = fila.querySelector("td").innerHTML;
 
+        // Compara el id de cada incidencia con el id de la incidencia que quieres eliminar, 
+        // si el id no es igual al que quieres borrar, esa incidencia se queda en el nuevo array y asi eliminara la incidencia cuyo id coincida con eldd de idIncidencia
+        incidencies = incidencies.filter(inc => inc.id != idIncidencia);
+
+        // Vuelve a renderizar la tabla y actualizar estadísticas
+        renderitzarTaula();
+        actualitzarEstadistiques();
     }
 
   });
@@ -353,4 +359,3 @@ function obrirModalNova(){
     
 
   }
-

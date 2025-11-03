@@ -166,14 +166,23 @@ function moverFicha(jugador, posicion) {
         posicionJugador2 = 21;
 
       }
-    }
+    }else if (casilla.function === "pierdeTurno"){
 
-
-    if (casilla.function ==="pierdeTurno"){
       // Saltar el turno del otro jugador
       turnoJugador = !turnoJugador;
+
+
+    }else if (casilla.function ==="avanzaEstrella"){
       
+      
+
+
     }
+
+    
+
+
+    
 
   }, 1000);
 }
