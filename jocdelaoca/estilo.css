@@ -102,7 +102,7 @@ h1, h2{
 #mostrarPreguntasJugador1{
   position: fixed;
   align-items: flex-start;
-  padding: 250px;
+  padding: 280px;
   background-color: red;
   height: 100%;
   max-height: 100%;

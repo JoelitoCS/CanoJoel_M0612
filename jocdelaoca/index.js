@@ -36,7 +36,7 @@ const posiciones = [
   { x: 1116, y: 278, function: "Normal" },
   { x: 1121, y: 326, function: "Normal" },
   { x: 1122, y: 375, function: "Normal" },
-  { x: 1117, y: 420, function: "retocede27" },
+  { x: 1117, y: 420, function: "retrocede27" },
   { x: 1040, y: 420, function: "tirarOtraVez" },
   { x: 973, y: 439, function: "Normal" },
   { x: 906, y: 416, function: "retrocede20" },
